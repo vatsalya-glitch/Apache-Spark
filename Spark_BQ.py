@@ -27,8 +27,22 @@ sql = """
   LIMIT 10
   """
 df_sql = spark.read.format("bigquery").load(sql)
+#or spark.read.format("bigquery").option("query",sql).load()
+#set "viewEnable" true, and "materializationDataset" must be set to  dataset where the GCP user has table creation permission
 
 df.write.format('bigquery').\
     mode('overwrite').\
     option('createDisposition', 'CREATE_IF_NEEDED').\
     save('dataset.tablename')
+
+#mode: 
+#"error"- when saving a DataFrame to a data source, if data already exists, an exception is expected to be thrown.
+#"append"- when saving a DataFrame to a data source,if data/table already exists, content of the DataFrame are expected to be appended to existsing data
+#"overwrite"-  Overwrite mode means that when saving a DataFrame to a data source, if data/table already exists, existing data is expected to be overwritten by the content of the DataFrame
+#"ignore"- Ignore mode means that when saving a DataFrame to a data source, if data already exists, the save operation is expected not to save the contents of the DataFrame and not to change the existing data. This is similar to a CREATE TABLE IF NOT EXISTS in SQL.
+
+
+
+#options
+#createDisposition:- CREATE_IF_NEEDED- create the table if it doesn't exist.
+#CREATE_NEVER:- job will fail if the table doesn't exist.
