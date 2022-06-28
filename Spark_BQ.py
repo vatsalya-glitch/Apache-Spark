@@ -8,7 +8,8 @@ conf = SparkConf()
 conf.set('google.cloud.auth.service.account.enable', 'true')
 conf.set("temporaryGcsBucket","gcs_bucket")
 conf.set("viewsEnabled","true")
-conf.set('bigQueryJobLabel.owner', LABEL_OWNER)  #add labels in the jobs, used for adding labels while creati
+conf.set('bigQueryJobLabel.owner', LABEL_OWNER)  #add labels in the jobs, used for adding labels while creating
+conf.set('materializationDataset',<dataset>)
 
 
 spark = SparkSession.builder.config(conf=conf).appName("pyspark-bigquery-saveas").getOrCreate()
